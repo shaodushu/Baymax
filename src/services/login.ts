@@ -6,12 +6,12 @@ export interface LoginParamsType {
 }
 
 export async function accountLogin(params: LoginParamsType) {
-  return request<API.LoginStateType>('/api/login/account', {
+  return request<API.LoginStateType>('/login/account', {
     method: 'POST',
     data: params,
   });
 }
 
 export async function outLogin() {
-  return request('/api/login/outLogin');
+  return request('/login/outLogin');
 }

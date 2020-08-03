@@ -1,4 +1,4 @@
-export interface TableListItem {
+export interface ReportItem {
   key: number;
   disabled?: boolean;
   href: string;
@@ -11,6 +11,21 @@ export interface TableListItem {
   updatedAt: Date;
   createdAt: Date;
   progress: number;
+}
+
+export interface TableListItem {
+  key: number;
+  createAccount: string;
+  title: string;
+  describes: string;
+  content: string;
+  spendTime: number;
+  percentage: number;
+  percentage: string;
+  checked: number;
+  delay: number;
+  createTime: Date | string;
+  updateTime: Date | string;
 }
 
 export interface TableListPagination {

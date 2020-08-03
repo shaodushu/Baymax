@@ -1,7 +1,7 @@
 import { Settings as LayoutSettings } from '@ant-design/pro-layout';
 
 export default {
-  navTheme: 'dark',
+  navTheme: 'light',
   // 拂晓蓝
   primaryColor: '#1890ff',
   layout: 'top',

@@ -1,5 +1,19 @@
 import { request } from 'umi';
-import { TableListParams, TableListItem } from './data.d';
+import { TableListParams, TableListItem, ReportItem } from './data.d';
+
+export async function addReport(params: ReportItem) {
+  return request('/report/create', {
+    method: 'POST',
+    data: params
+  });
+}
+
+export async function queryReport(params: TableListParams) {
+  return request('/report/list', {
+    method: 'POST',
+    data: params
+  });
+}
 
 export async function queryRule(params?: TableListParams) {
   return request('/api/rule', {
