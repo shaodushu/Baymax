@@ -7,7 +7,7 @@ import { history, useAccess, useModel } from 'umi';
 import moment from 'moment';
 import { exportExcel } from '@/utils/tools';
 import { TableListItem } from './data.d';
-import { queryReport, removeRule } from './service';
+import { queryReport, deleteReport } from './service';
 
 const { Meta } = Card;
 
@@ -19,7 +19,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('正在删除');
   if (!selectedRows) return true;
   try {
-    await removeRule({
+    await deleteReport({
       key: selectedRows.map((row) => row.key),
     });
     hide();
@@ -56,6 +56,7 @@ const TableList: React.FC<{}> = () => {
     },
     {
       title: '提交人',
+      width: 120,
       dataIndex: 'createAccount',
     },
     {

@@ -12,13 +12,17 @@ export default [
     },
     {
         path: '/',
-        redirect: '/report/index',
+        redirect: '/report',
     },
     {
-        path: '/report',
+        // path: '/',
         name: '日报',
         icon: 'smile',
         routes: [
+            {
+                path: '/report',
+                redirect: '/report/index',
+            },
             {
                 path: '/report/index',
                 name: '日报日志',
@@ -34,21 +38,6 @@ export default [
             },
         ],
     },
-    // {
-    //   path: '/admin',
-    //   name: '日报',
-    //   icon: 'crown',
-    //   access: 'canAdmin',
-    //   component: './Admin',
-    //   routes: [
-    //     {
-    //       path: '/admin/sub-page',
-    //       name: 'sub-page',
-    //       icon: 'smile',
-    //       component: './Welcome',
-    //     },
-    //   ],
-    // },
     {
         component: './404',
     },

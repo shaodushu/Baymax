@@ -15,6 +15,13 @@ export async function queryReport(params: TableListParams) {
   });
 }
 
+export async function deleteReport(params: { key: number[] }) {
+  return request('/report/remove', {
+    method: 'POST',
+    data: params
+  });
+}
+
 export async function queryRule(params?: TableListParams) {
   return request('/api/rule', {
     params,
