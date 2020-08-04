@@ -20,8 +20,7 @@ export interface TableListItem {
   describes: string;
   content: string;
   spendTime: number;
-  percentage: number;
-  percentage: string;
+  percentage: number | string;
   checked: number;
   delay: number;
   createTime: Date | string;

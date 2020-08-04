@@ -57,7 +57,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: '提交人',
       width: 120,
-      dataIndex: 'createAccount',
+      dataIndex: 'username',
     },
     {
       title: '任务名称',
@@ -123,13 +123,13 @@ const TableList: React.FC<{}> = () => {
   useEffect(() => {
     setExportRows(selectedRowsState.map(item => {
 
-      const { checked, delay, createTime, updateTime } = item
+      const { checked, delay, createTime, percentage } = item
       return {
         ...item,
+        percentage: `${percentage}%`,
         checked: { 0: '否', 1: '是' }[checked],
         delay: { 0: '否', 1: '是' }[delay],
-        createTime: moment(createTime).format('YYYY-MM-DD HH:mm:ss'),
-        updateTime: moment(updateTime).format('YYYY-MM-DD HH:mm:ss')
+        createTime: moment(createTime).format('YYYY/MM/DD')
       }
     }))
   }, [selectedRowsState])
