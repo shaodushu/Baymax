@@ -60,6 +60,13 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'username',
     },
     {
+      title: '日期',
+      dataIndex: 'time',
+      valueType: 'date',
+      width: 200,
+      hideInSearch: true,
+    },
+    {
       title: '任务名称',
       dataIndex: 'title',
       width: 200,
@@ -129,7 +136,7 @@ const TableList: React.FC<{}> = () => {
         percentage: `${percentage}%`,
         checked: { 0: '否', 1: '是' }[checked],
         delay: { 0: '否', 1: '是' }[delay],
-        createTime: moment(createTime).format('YYYY/MM/DD')
+        time: moment(createTime).format('YYYY/MM/DD')
       }
     }))
   }, [selectedRowsState])
@@ -180,7 +187,7 @@ const TableList: React.FC<{}> = () => {
           >
             批量删除
           </Button>
-          <Button type="primary" onClick={() => exportExcel(columns.filter(item => item.dataIndex !== 'index' && item.dataIndex !== 'updateTime'), exportRows, '日报')}>批量下载</Button>
+          <Button type="primary" onClick={() => exportExcel(columns.filter(item => item.dataIndex !== 'index' && item.dataIndex !== 'createTime' && item.dataIndex !== 'updateTime'), exportRows, '日报')}>批量下载</Button>
         </FooterToolbar>
       )}
     </PageContainer>

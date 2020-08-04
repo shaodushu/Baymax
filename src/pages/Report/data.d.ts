@@ -11,6 +11,7 @@ export interface ReportItem {
   updatedAt: Date;
   createdAt: Date;
   progress: number;
+  time: Date | string;
 }
 
 export interface TableListItem {
@@ -23,6 +24,7 @@ export interface TableListItem {
   percentage: number | string;
   checked: number;
   delay: number;
+  time: Date | string;
   createTime: Date | string;
   updateTime: Date | string;
 }

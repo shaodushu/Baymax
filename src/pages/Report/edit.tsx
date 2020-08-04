@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Form, Input, Checkbox, Button, Slider, InputNumber, message } from 'antd';
+import { Card, Form, Input, Checkbox, Button, Slider, InputNumber, message, DatePicker } from 'antd';
+import moment from 'moment';
 import { ReportItem } from './data';
 import { addReport } from './service';
 // import styles from './index.less';
@@ -13,7 +14,7 @@ export default (): React.ReactNode => {
     const onFinish = async (values: ReportItem) => {
         const hide = message.loading('正在添加');
         try {
-            await addReport(values)
+            await addReport({ ...values, time: moment(values.time).format('YYYY-MM-DD HH:mm:ss') })
             hide();
             message.success('添加成功');
             return true;
@@ -44,6 +45,13 @@ export default (): React.ReactNode => {
                 onFinish={(values) => onFinish(values as ReportItem)}
                 onFinishFailed={onFinishFailed}
             >
+                <Form.Item
+                    label="日期"
+                    name="time"
+                    rules={[{ required: true, message: '日期' }]}
+                >
+                    <DatePicker />
+                </Form.Item>
                 <Form.Item
                     label="任务名称"
                     name="title"
