@@ -1,5 +1,5 @@
 import React from 'react';
-import { BasicLayoutProps, Settings as LayoutSettings, SettingDrawerProps } from '@ant-design/pro-layout';
+import { BasicLayoutProps, Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { notification } from 'antd';
 import { history, RequestConfig } from 'umi';
 import RightContent from '@/components/RightContent';
@@ -11,7 +11,6 @@ import defaultSettings from '../config/defaultSettings';
 export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
   settings?: LayoutSettings;
-  settingDrawer?: SettingDrawerProps;
 }> {
   // 如果是登录页面，不执行
   if (history.location.pathname !== '/user/login') {
@@ -19,11 +18,7 @@ export async function getInitialState(): Promise<{
       const currentUser = await queryCurrent();
       return {
         currentUser,
-        settings: defaultSettings,
-        settingDrawer: {
-          hideCopyButton: true,
-          hideHintAlert: true
-        }
+        settings: defaultSettings
       };
     } catch (error) {
       history.push('/user/login');
