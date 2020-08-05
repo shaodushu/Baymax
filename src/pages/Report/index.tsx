@@ -92,7 +92,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'spendTime',
       width: 80,
       hideInSearch: true,
-      render: (text: any) => <>{text.toFixed(1)}h</>
+      renderText: (text: number) => `${text.toFixed(1)} h`
     },
     {
       title: '完成度',
@@ -106,21 +106,27 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'checked',
       width: 200,
       hideInSearch: true,
-      render: (text: any) => <>{{ 0: '否', 1: '是' }[text]}</>
+      valueEnum: {
+        0: '否',
+        1: '是',
+      },
     },
     {
       title: '是否延期',
       dataIndex: 'delay',
       width: 200,
       hideInSearch: true,
-      render: (text: any) => <>{{ 0: '否', 1: '是' }[text]}</>
+      valueEnum: {
+        0: '否',
+        1: '是',
+      },
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
       width: 200,
       valueType: 'dateTimeRange',
-      render: (text: any) => moment(text).format('YYYY-MM-DD HH:mm:ss')
+      renderText: (text: Date) => moment(text).format('YYYY-MM-DD HH:mm:ss')
     },
     {
       title: '更新时间',
