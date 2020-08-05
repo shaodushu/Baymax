@@ -1,7 +1,7 @@
 import { UserOutlined, LockOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { message, Card, Form, Input, Button, Modal } from 'antd';
 import React, { useState } from 'react';
-import { useModel, SelectLang } from 'umi';
+import { useModel } from 'umi';
 import { getPageQuery } from '@/utils/utils';
 import { LoginParamsType, accountLogin } from '@/services/login';
 import Footer from '@/components/Footer';
@@ -64,9 +64,6 @@ const Login: React.FC<{}> = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.lang}>
-        <SelectLang />
-      </div>
       <div className={styles.content}>
         <Card
           style={{ width: 350 }}

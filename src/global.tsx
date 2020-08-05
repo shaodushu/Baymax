@@ -1,7 +1,6 @@
 import { Button, message, notification } from 'antd';
 
 import React from 'react';
-import { useIntl } from 'umi';
 import defaultSettings from '../config/defaultSettings';
 
 const { pwa } = defaultSettings;
@@ -10,7 +9,7 @@ const { pwa } = defaultSettings;
 if (pwa) {
   // Notify user if offline now
   window.addEventListener('sw.offline', () => {
-    message.warning(useIntl().formatMessage({ id: 'app.pwa.offline' }));
+    message.warning('app.pwa.offline');
   });
 
   // Pop up a prompt on the page asking the user if they want to use the latest version
@@ -48,15 +47,15 @@ if (pwa) {
           reloadSW();
         }}
       >
-        {useIntl().formatMessage({ id: 'app.pwa.serviceworker.updated.ok' })}
+        app.pwa.serviceworker.updated.ok
       </Button>
     );
     notification.open({
-      message: useIntl().formatMessage({ id: 'app.pwa.serviceworker.updated' }),
-      description: useIntl().formatMessage({ id: 'app.pwa.serviceworker.updated.hint' }),
+      message: 'app.pwa.serviceworker.updated',
+      description: 'app.pwa.serviceworker.updated.hint',
       btn,
       key,
-      onClose: async () => {},
+      onClose: async () => { },
     });
   });
 } else if ('serviceWorker' in navigator) {
