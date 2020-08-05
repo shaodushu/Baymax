@@ -13,12 +13,12 @@ export async function getInitialState(): Promise<{
   settings?: LayoutSettings;
 }> {
   // 如果是登录页面，不执行
-  if (history.location.query.redirect || history.location.pathname !== '/user/login') {
+  if (history.location.pathname !== '/user/login') {
     try {
       const currentUser = await queryCurrent();
       return {
         currentUser,
-        settings: defaultSettings
+        settings: defaultSettings,
       };
     } catch (error) {
       history.push('/user/login');
@@ -40,7 +40,7 @@ export const layout = ({
     footerRender: () => <Footer />,
     onPageChange: () => {
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser?.id && history.location.pathname !== '/user/login') {
+      if (!initialState?.currentUser?.userid && history.location.pathname !== '/user/login') {
         history.push('/user/login');
       }
     },
@@ -94,5 +94,4 @@ const errorHandler = (error: ResponseError) => {
 
 export const request: RequestConfig = {
   errorHandler,
-  prefix: '/api'
 };

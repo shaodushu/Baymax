@@ -1,7 +1,7 @@
 import { Tooltip, Tag, Space } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
-import { useModel } from 'umi';
+import { useModel, SelectLang } from 'umi';
 import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
@@ -36,8 +36,8 @@ const GlobalHeaderRight: React.FC<{}> = () => {
         options={[
           { label: <a href="https://umijs.org/zh/guide/umi-ui.html">umi ui</a>, value: 'umi ui' },
           {
-            label: <a href="next.ant.design">ZWSJ</a>,
-            value: 'ZWSJ',
+            label: <a href="next.ant.design">Ant Design</a>,
+            value: 'Ant Design',
           },
           {
             label: <a href="https://protable.ant.design/">Pro Table</a>,
@@ -68,6 +68,7 @@ const GlobalHeaderRight: React.FC<{}> = () => {
           <Tag color={ENVTagColor[REACT_APP_ENV]}>{REACT_APP_ENV}</Tag>
         </span>
       )}
+      <SelectLang className={styles.action} />
     </Space>
   );
 };
