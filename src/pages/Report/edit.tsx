@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Form, Input, Checkbox, Button, Slider, InputNumber, message, DatePicker } from 'antd';
 import moment from 'moment';
@@ -10,19 +10,20 @@ import { addReport } from './service';
 const { TextArea } = Input
 
 export default (): React.ReactNode => {
-    const initialValues = { title: '', desc: '', content: '', spendTime: 0, percentage: 0, checked: false, delay: false }
+    const initialValues = { title: '', desc: '', content: '', spendTime: 0, percentage: 0, checked: false, delay: false, time: moment() }
+    const [loading, setLoading] = useState(false)
     const onFinish = async (values: ReportItem) => {
         const hide = message.loading('正在添加');
+        setLoading(true)
         try {
             await addReport({ ...values, time: moment(values.time).format('YYYY-MM-DD HH:mm:ss') })
             hide();
             message.success('添加成功');
-            return true;
         } catch (error) {
             hide();
             message.error('添加失败请重试！');
-            return false;
         }
+        setLoading(false)
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -48,7 +49,6 @@ export default (): React.ReactNode => {
                 <Form.Item
                     label="日期"
                     name="time"
-                    rules={[{ required: true, message: '日期' }]}
                 >
                     <DatePicker />
                 </Form.Item>
@@ -87,8 +87,10 @@ export default (): React.ReactNode => {
                 <Form.Item
                     label="完成度"
                     name="percentage"
+                    style={{ paddingTop: 24 }}
                 >
                     <Slider
+                        tooltipVisible
                         marks={{
                             0: 'F',
                             20: 'E',
@@ -114,7 +116,7 @@ export default (): React.ReactNode => {
                     <Checkbox />
                 </Form.Item>
                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={loading}>
                         提交
       </Button>
                 </Form.Item>

@@ -40,11 +40,7 @@ const TableList: React.FC<{}> = () => {
 
   const [columnsStateMap, setColumnsStateMap] = useState<{
     [key: string]: ColumnsState;
-  }>({
-    createAccount: {
-      show: access.canAdmin,
-    },
-  });
+  }>({});
   const [exportRows, setExportRows] = useState<TableListItem[]>([]);
 
   const columns: ProColumns<TableListItem>[] = [
@@ -56,38 +52,45 @@ const TableList: React.FC<{}> = () => {
     },
     {
       title: '提交人',
-      width: 120,
+      width: 150,
       dataIndex: 'username',
+      hideInTable: access.canUser,
+      hideInSearch: access.canUser,
     },
     {
       title: '日期',
       dataIndex: 'time',
       valueType: 'date',
       width: 200,
-      hideInSearch: true,
     },
     {
       title: '任务名称',
       dataIndex: 'title',
-      width: 200,
+      copyable: true,
+      ellipsis: true,
+      width: 150,
       hideInSearch: true,
     },
     {
       title: '任务描述',
       dataIndex: 'describes',
-      width: 200,
+      copyable: true,
+      ellipsis: true,
+      width: 150,
       hideInSearch: true,
     },
     {
       title: '工作内容',
       dataIndex: 'content',
-      width: 200,
+      copyable: true,
+      ellipsis: true,
+      width: 150,
       hideInSearch: true,
     },
     {
       title: '用时',
       dataIndex: 'spendTime',
-      width: 200,
+      width: 80,
       hideInSearch: true,
     },
     {
