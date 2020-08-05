@@ -1,7 +1,7 @@
 import { UserOutlined, LockOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { message, Card, Form, Input, Button, Modal } from 'antd';
 import React, { useState } from 'react';
-import { useModel } from 'umi';
+import { useModel, SelectLang } from 'umi';
 import { getPageQuery } from '@/utils/utils';
 import { LoginParamsType, accountLogin } from '@/services/login';
 import Footer from '@/components/Footer';
@@ -36,12 +36,20 @@ const Login: React.FC<{}> = () => {
 
   const handleSubmit = async (values: LoginParamsType) => {
     setLoading(true);
-    await accountLogin({ ...values })
-      .then(async ({ status }) => {
-        if (status === "ok") await refresh().then(replaceGoto);
-        else message.info('登陆失败');
-      })
-      .catch((reason: any) => message.error(`登陆失败:${reason}`));
+    try {
+      // 登录
+      const { status } = await accountLogin({ ...values });
+      if (status === 'ok') {
+        message.success('登录成功！');
+        replaceGoto();
+        setTimeout(() => {
+          refresh();
+        }, 0);
+        return;
+      }
+    } catch (error) {
+      message.error(`登陆失败:${error}`);
+    }
     setLoading(false);
   };
 
@@ -56,6 +64,9 @@ const Login: React.FC<{}> = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.lang}>
+        <SelectLang />
+      </div>
       <div className={styles.content}>
         <Card
           style={{ width: 350 }}
