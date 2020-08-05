@@ -92,6 +92,7 @@ const TableList: React.FC<{}> = () => {
       dataIndex: 'spendTime',
       width: 80,
       hideInSearch: true,
+      render: (text: any) => <>{text.toFixed(1)}h</>
     },
     {
       title: '完成度',
