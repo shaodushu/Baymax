@@ -13,7 +13,7 @@ export async function getInitialState(): Promise<{
   settings?: LayoutSettings;
 }> {
   // 如果是登录页面，不执行
-  if (history.location.query.redirect || history.location.pathname !== '/user/login') {
+  if (history.location.pathname !== '/user/login') {
     try {
       const currentUser = await queryCurrent();
       return {

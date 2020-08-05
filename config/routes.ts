@@ -15,7 +15,7 @@ export default [
         redirect: '/report',
     },
     {
-        // path: '/',
+        path: '/report',
         name: '日报',
         icon: 'smile',
         routes: [
