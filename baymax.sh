@@ -1,6 +1,6 @@
 #!/bin/bash 
 echo "编译build"
-yarn run build
+npm run build
 echo "开始执行构建前端项目:baymax为docker镜像名称 0.0.2为版本号"
 docker build -t baymax:0.0.2 .
 echo "停止旧容器 并删除旧容器"
