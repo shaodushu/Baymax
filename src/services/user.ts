@@ -1,5 +1,9 @@
 import { request } from 'umi';
 
+export async function query() {
+  return request<API.CurrentUser[]>('/users');
+}
+
 export async function queryCurrent() {
   return request<API.CurrentUser>('/currentUser');
 }

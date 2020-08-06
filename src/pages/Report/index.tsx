@@ -1,15 +1,17 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Avatar, Card, Skeleton } from 'antd';
+import { Button, message, Avatar, Card, Skeleton, Select } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType, ColumnsState } from '@ant-design/pro-table';
 import { history, useAccess, useModel } from 'umi';
 import moment from 'moment';
 import { exportExcel } from '@/utils/tools';
+import { query } from '@/services/user';
 import { TableListItem } from './data.d';
 import { queryReport, deleteReport } from './service';
 
 const { Meta } = Card;
+const { Option } = Select;
 
 /**
  *  删除节点
@@ -37,10 +39,29 @@ const TableList: React.FC<{}> = () => {
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
   const access = useAccess();
   const { initialState, loading } = useModel('@@initialState');
+  const [users, setUsers] = useState<API.CurrentUser[]>([])
+
+  const queryAllUser = async () => {
+    const data = await query()
+    setUsers(data)
+  }
+
+  useEffect(() => {
+    if (access.canAdmin) {
+      queryAllUser()
+    }
+  }, [])
 
   const [columnsStateMap, setColumnsStateMap] = useState<{
     [key: string]: ColumnsState;
-  }>({});
+  }>({
+    createTime: {
+      show: false
+    },
+    updateTime: {
+      show: false
+    }
+  });
   const [exportRows, setExportRows] = useState<TableListItem[]>([]);
 
   const columns: ProColumns<TableListItem>[] = [
@@ -52,22 +73,25 @@ const TableList: React.FC<{}> = () => {
     },
     {
       title: '提交人',
-      width: 150,
+      width: 120,
       dataIndex: 'username',
       hideInTable: access.canUser,
       hideInSearch: access.canUser,
+      filters: true,
+      renderFormItem: () => <Select >
+        {users.map(user => <Option key={user.id} value={user.name}>{user.name}</Option>)}
+      </Select>
     },
     {
       title: '日期',
       dataIndex: 'time',
       valueType: 'date',
-      width: 200,
+      width: 120,
     },
     {
       title: '任务名称',
       dataIndex: 'title',
       copyable: true,
-      ellipsis: true,
       width: 150,
       hideInSearch: true,
     },
@@ -75,16 +99,14 @@ const TableList: React.FC<{}> = () => {
       title: '任务描述',
       dataIndex: 'describes',
       copyable: true,
-      ellipsis: true,
-      width: 150,
+      width: 200,
       hideInSearch: true,
     },
     {
       title: '工作内容',
       dataIndex: 'content',
       copyable: true,
-      ellipsis: true,
-      width: 150,
+      width: 200,
       hideInSearch: true,
     },
     {
@@ -104,7 +126,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: '是否自检',
       dataIndex: 'checked',
-      width: 200,
+      width: 110,
       hideInSearch: true,
       valueEnum: {
         0: '否',
@@ -114,7 +136,7 @@ const TableList: React.FC<{}> = () => {
     {
       title: '是否延期',
       dataIndex: 'delay',
-      width: 200,
+      width: 110,
       hideInSearch: true,
       valueEnum: {
         0: '否',
