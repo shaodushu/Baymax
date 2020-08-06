@@ -78,7 +78,7 @@ const TableList: React.FC<{}> = () => {
       hideInTable: access.canUser,
       hideInSearch: access.canUser,
       filters: true,
-      renderFormItem: () => <Select >
+      renderFormItem: () => <Select allowClear>
         {users.map(user => <Option key={user.id} value={user.name}>{user.name}</Option>)}
       </Select>
     },
