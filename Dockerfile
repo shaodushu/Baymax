@@ -20,4 +20,7 @@ LABEL version ="0.0.2"
 COPY ./dist /usr/share/nginx/html
 COPY ./baymax.conf  /etc/nginx/conf.d
 
+# 设置为东八区
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+
 EXPOSE 8000
