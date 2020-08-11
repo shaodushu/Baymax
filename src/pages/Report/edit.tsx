@@ -14,7 +14,7 @@ export default (): React.ReactNode => {
     const localtion = useLocation()
     // @ts-ignore
     const time = localtion.state && moment(localtion.state.time)
-    const initialValues = Object.assign(localtion.state || { title: '', desc: '', content: '', spendTime: 0, percentage: 0, checked: false, delay: false, time: moment() }, { time })
+    const initialValues = Object.assign(localtion.state || { title: '', desc: '', content: '', spendTime: 0, percentage: 0, checked: false, delay: false, time: moment() }, time && { time })
     const [loading, setLoading] = useState(false)
 
     const onAdd = async (values: ReportItem) => {
