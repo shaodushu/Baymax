@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import { TableListParams, TableListItem, ReportItem } from './data.d';
+import { TableListParams, ReportItem } from './data.d';
 
 export async function addReport(params: ReportItem) {
   return request('/report/create', {
@@ -22,38 +22,9 @@ export async function deleteReport(params: { key: number[] }) {
   });
 }
 
-export async function queryRule(params?: TableListParams) {
-  return request('/api/rule', {
-    params,
-  });
-}
-
-export async function removeRule(params: { key: number[] }) {
-  return request('/api/rule', {
+export async function updateReport(params: ReportItem) {
+  return request('/report/update', {
     method: 'POST',
-    data: {
-      ...params,
-      method: 'delete',
-    },
-  });
-}
-
-export async function addRule(params: TableListItem) {
-  return request('/api/rule', {
-    method: 'POST',
-    data: {
-      ...params,
-      method: 'post',
-    },
-  });
-}
-
-export async function updateRule(params: TableListParams) {
-  return request('/api/rule', {
-    method: 'POST',
-    data: {
-      ...params,
-      method: 'update',
-    },
+    data: params,
   });
 }

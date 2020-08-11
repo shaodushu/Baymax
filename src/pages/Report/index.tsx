@@ -3,8 +3,9 @@ import { Button, message, Avatar, Card, Skeleton, Select } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable, { ProColumns, ActionType, ColumnsState } from '@ant-design/pro-table';
-import { history, useAccess, useModel } from 'umi';
+import { useAccess, useModel, useHistory } from 'umi';
 import moment from 'moment';
+import { omit } from 'lodash'
 import { exportExcel } from '@/utils/tools';
 import { query } from '@/services/user';
 import { TableListItem } from './data.d';
@@ -40,6 +41,7 @@ const TableList: React.FC<{}> = () => {
   const access = useAccess();
   const { initialState, loading } = useModel('@@initialState');
   const [users, setUsers] = useState<API.CurrentUser[]>([])
+  const history = useHistory()
 
   const queryAllUser = async () => {
     const data = await query()
@@ -157,6 +159,26 @@ const TableList: React.FC<{}> = () => {
       valueType: 'dateTime',
       hideInSearch: true,
     },
+    {
+      title: '操作',
+      width: 80,
+      dataIndex: 'option',
+      valueType: 'option',
+      render: (_, record) => (
+        <>
+          <a
+            onClick={() => {
+              history.push({
+                pathname: '/report/edit',
+                state: omit(record, ['createTime', 'updateTime']),
+              })
+            }}
+          >
+            编辑
+          </a>
+        </>
+      ),
+    }
   ];
 
   useEffect(() => {

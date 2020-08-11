@@ -2,28 +2,55 @@ import React, { useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Form, Input, Checkbox, Button, Slider, InputNumber, message, DatePicker } from 'antd';
 import moment from 'moment';
-import { ReportItem } from './data';
-import { addReport } from './service';
-// import styles from './index.less';
 
+import { useLocation } from 'umi';
+import { ReportItem } from './data';
+import { addReport, updateReport } from './service';
+// import styles from './index.less';
 
 const { TextArea } = Input
 
 export default (): React.ReactNode => {
-    const initialValues = { title: '', desc: '', content: '', spendTime: 0, percentage: 0, checked: false, delay: false, time: moment() }
+    const localtion = useLocation()
+    // @ts-ignore
+    const time = localtion.state && moment(localtion.state.time)
+    const initialValues = Object.assign(localtion.state || { title: '', desc: '', content: '', spendTime: 0, percentage: 0, checked: false, delay: false, time: moment() }, { time })
     const [loading, setLoading] = useState(false)
-    const onFinish = async (values: ReportItem) => {
+
+    const onAdd = async (values: ReportItem) => {
         const hide = message.loading('正在添加');
         setLoading(true)
         try {
             await addReport({ ...values, time: moment(values.time).format('YYYY-MM-DD HH:mm:ss') })
-            hide();
+
             message.success('添加成功');
         } catch (error) {
-            hide();
             message.error('添加失败请重试！');
         }
+        hide();
         setLoading(false)
+    }
+
+    const onUpdate = async (values: ReportItem) => {
+        const hide = message.loading('正在更新');
+        setLoading(true)
+        try {
+            await updateReport({ ...values, time: moment(values.time).format('YYYY-MM-DD HH:mm:ss') })
+
+            message.success('更新成功');
+        } catch (error) {
+            message.error('更新失败请重试！');
+        }
+        hide();
+        setLoading(false)
+    }
+
+    const onFinish = (values: ReportItem) => {
+        if (values.key) {
+            onUpdate(values)
+        } else {
+            onAdd(values)
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -46,6 +73,20 @@ export default (): React.ReactNode => {
                 onFinish={(values) => onFinish(values as ReportItem)}
                 onFinishFailed={onFinishFailed}
             >
+                <Form.Item
+                    label="key"
+                    name="key"
+                    hidden
+                >
+                    <></>
+                </Form.Item>
+                <Form.Item
+                    label="uid"
+                    name="uid"
+                    hidden
+                >
+                    <></>
+                </Form.Item>
                 <Form.Item
                     label="日期"
                     name="time"
